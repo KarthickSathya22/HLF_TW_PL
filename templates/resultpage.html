@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prediction Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/material-gauge.css') }}">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+      }
+      td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 5px;
+      }
+      tr:nth-child(odd) {
+      background-color: #dddddd;
+      }
+      body, div, form, input, select, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 65%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 #095484; 
+      }
+      .banner {
+      position: relative;
+      height: 50px; 
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      textarea {
+      width: calc(100% - 12px);
+      padding: 5px;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder, a {
+      color: #095484;
+      }
+      .item input:hover, .item select:hover, .item textarea:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #095484;
+      color: #095484;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      }
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 1%;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      input[type=radio], input[type=checkbox]  {
+      display: none;
+      }
+      label.radio, label.check {
+      position: relative;
+      display: inline-block;
+      margin: 5px 20px 15px 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      span.required {
+      margin-left: 0;
+      color: red;
+      }
+      .checkbox-item label {
+      margin: 5px 20px 10px 0;
+      }
+      label.radio:before, label.check:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      }
+      label.radio:before {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 2px solid #095484;
+      }
+      label.check:before {
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      border: 1px solid #095484;
+      }
+      input[type=checkbox]:checked + .check:before {
+      background: #095484;
+      }
+      label.radio:after {
+      left: 5px;
+      border: 3px solid #095484;
+      }
+      label.check:after {
+      left: 4px;
+      border: 3px solid #fff;
+      }
+      label.radio:after, label.check:after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      width: 8px;
+      height: 4px;
+      background: transparent;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+      opacity: 0;
+      }
+      input[type=radio]:checked + label:after, input[type=checkbox]:checked + label:after {
+      opacity: 1;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #095484;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #0666a3;
+      }
+      .title-block select, .title-block input {
+      margin-bottom: 10px;
+      }
+      @media (min-width: 568px) {
+      .title-block {
+      display: flex;
+      justify-content: space-between;
+      }
+      .title-block select {
+      width: 200px;
+      margin-bottom: 0;
+      }
+      .title-block input {
+      width: 200px;
+      margin-bottom: 0;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="testbox">
+    <form action="{{ url_for('back')}}" method="post">
+      <fieldset>
+      <legend><b>Points Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <table border="1" width="50%">
+          <caption><b>Points Based On HLF Excel</b></caption>
+             <tr>
+              <th>Score Summation</th>
+              <th>Criteria</th>
+              <th>Points</th>
+              <th>Weightage</th>
+              <th>Earned Points</th>
+             </tr>
+             <tr>
+              <th rowspan="2">Asset Risk</th>
+              <th>Loan To Value</th>
+              <td>{{(data[20])}}</td>
+              <td>15%</td>
+              <td>{{(15/100)*data[20]}}</td>
+             </tr>
+             <tr>
+              <th>Asset Financed</th>
+              <td>{{data[21]}}</td>
+              <td>10%</td>
+              <td>{{(10/100)*data[21]}}</td>
+             </tr>
+             <tr>
+              <th rowspan="2">Income&Cashflow</th>
+              <th>Gross Income</th>
+              <td>{{(data[22])}}</td>
+              <td>20%</td>
+              <td>{{(20/100)*data[22]}}</td>
+             </tr>
+             <tr>
+              <th>Banking</th>
+              <td>{{data[24]}}</td>
+              <td>30%</td>
+              <td>{{(30/100)*data[24]}}</td>
+             </tr>
+             <tr>
+              <th rowspan="2">Customer Profile</th>
+              <th>Stability</th>
+              <td>{{(data[26])}}</td>
+              <td>15%</td>
+              <td>{{(15/100)*data[26]}}</td>
+             </tr>
+             <tr>
+              <th>Age&Martial Status</th>
+              <td>{{data[27]}}</td>
+              <td>10%</td>
+              <td>{{(10/100)*data[27]}}</td>
+             </tr>
+             <tr>
+              <th>Geo Limit</th>
+              <td></td>
+              <td>{{data[29]}}</td>
+              <td>100%</td>
+              <td>{{data[29]}}</td>
+             </tr>
+             <tr>
+             <th>Total</th>
+             <td></td>
+             <td></td>
+             <td></td>
+             <td>{{((15/100)*data[20])+((10/100)*data[21])+((20/100)*data[22])+((30/100)*data[24])+((10/100)*data[26])+((15/100)*data[27])+data[29]}}</td>
+             </tr>
+            </table>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <table border="1" width="50%">
+          <caption><b>Personal Loan Proposal</b></caption>
+             <tr>
+              <th>Loan Eligibilty</th>
+              <td>{{ eligible }}</td>
+             </tr>
+             <tr>
+              <th>Recommended Amount</th>
+              <td>{{ cash }}</td>
+             </tr>
+          </table>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <br>
+            <center><caption><b>Probability Based On Data</b></caption></center>
+            <center><h2>{{ "{} - {}%".format(status,prediction_text) }}</h2></center>
+              <div class="gauge gauge--liveupdate" id="gauge">
+            	<div class="gauge__container">
+            		<div class="gauge__marker"></div>
+            		<div class="gauge__background"></div>
+            		<div class="gauge__center"></div>
+            		<div class="gauge__data"></div>
+            		<div class="gauge__needle"></div>
+            	</div>
+            	<div class="gauge__labels mdl-typography__headline">
+                	<span class="gauge__label--low"><b>0</b></span>
+                	<span class="gauge__label--spacer"></span>
+                	<span class="gauge__label--high"><b>100</b></span>
+            	</div>
+        	  </div>
+        	  <script src="{{url_for('static', filename='js/material-gauge.js')}}"></script>
+              <script src="material-gauge.js"></script>
+    		  <script>
+    			var gauge = new Gauge(document.getElementById("gauge"));
+    			gauge.value("{{ "{:0.2f}".format(prediction_text/100) }}");
+    	      </script>
+          </div>
+          <div>
+            <br>
+            <center><caption><b>Score Card</b></caption></center>
+            <center><h2>{{ "Cibil Score - {}".format(info[7]) }}</h2></center>
+              <div class="gauge gauge--liveupdate" id="gauge1">
+            	<div class="gauge__container">
+            		<div class="gauge__marker"></div>
+            		<div class="gauge__background"></div>
+            		<div class="gauge__center"></div>
+            		<div class="gauge__data"></div>
+            		<div class="gauge__needle"></div>
+            	</div>
+            	<div class="gauge__labels mdl-typography__headline">
+                	<span class="gauge__label--low"><b>300</b></span>
+                	<span class="gauge__label--spacer"></span>
+                	<span class="gauge__label--high"><b>900</b></span>
+            	</div>
+        	  </div>
+        	  <script src="{{url_for('static', filename='js/material-gauge.js')}}"></script>
+              <script src="material-gauge.js"></script>
+    		  <script>
+    			var gauge1 = new Gauge(document.getElementById("gauge1"));
+    			gauge1.value("{{ "{:0.2f}".format(data[18]/1000) }}");
+    	      </script>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <fieldset>
+      <legend><b>Cibil Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <table border="1">
+          <caption><b>Bureau Report Information</b></caption>
+             <tr>
+              <th>Details</th>
+              <th>Values</th>
+             </tr>
+             <tr>
+              <th>Borrower Name</th>
+              <td>{{info[0]}}</td>
+             </tr>
+             <tr>
+              <th>Date of Birth</th>
+              <td>{{info[2]}}</td>
+             </tr>
+             <tr>
+              <th>Gender</th>
+              <td>{{info[3]}}</td>
+             </tr>
+             <tr>
+              <th>PAN Number</th>
+              <td style="background-color: lightsteelblue;">{{info[4]}}</td>
+             </tr>
+             <tr>
+              <th>Phone Number</th>
+              <td>{{info[5]}}</td>
+             </tr>
+             <tr>
+              <th>Email Id</th>
+              <td>{{info[6]}}</td>
+             </tr>
+             <tr>
+              <th>Address</th>
+              <td>{{info[8]}}</td>
+             </tr>
+             <tr>
+              <th>PIN Code</th>
+              <td>{{info[9]}}</td>
+             </tr>
+             <tr>
+              <th>Account Number</th>
+              <td>{{info[10]}}</td>
+             </tr>
+             <tr>
+              <th>Open Date</th>
+              <td>{{info[11]}}</td>
+             </tr>
+             <tr>
+              <th>Last Date</th>
+              <td>{{info[12]}}</td>
+             </tr>
+             <tr>
+              <th>Loan Amount</th>
+              <td style="background-color: lightsteelblue;">{{info[13]}}</td>
+             </tr>
+             <tr>
+              <th>Current Balance</th>
+              <td>{{info[14]}}</td>
+             </tr>
+             <tr>
+              <th>Overdue</th>
+              <td style="background-color: lightsteelblue;">{{info[15]}}</td>
+             </tr>
+             <tr>
+              <th>Interest</th>
+              <td>{{info[16]}}</td>
+             </tr>
+             <tr>
+              <th>Tenure</th>
+              <td>{{info[17]}}</td>
+             </tr>
+             <tr>
+              <th>EMI</th>
+              <td>{{info[18]}}</td>
+             </tr>
+             <tr>
+              <th>Collateral Value</th>
+              <td>{{info[19]}}</td>
+             </tr>
+             <tr>
+              <th>Total Number Enquiries</th>
+              <td>{{info[20]}}</td>
+             </tr>
+             <tr>
+              <th>Enquired Amount</th>
+              <td style="background-color: lightsteelblue;">{{info[23]}}</td>
+             </tr>
+             <tr>
+              <th>Last Enquired Date</th>
+              <td>{{info[21]}}</td>
+             </tr>
+            </table>
+          </div>
+          </div>
+      </fieldset>
+      </br>
+      <fieldset>
+      <legend><b>Personal Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Gender</b></p>
+          <input type="text" value="{{data[30]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Number of Dependants</b></p>
+          <input type="text" value="{{data[1]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Number of Years Staying</b></p>
+          <input type="text" value="{{data[3]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Borrower Age</b></p>
+          <input type="text" value="{{data[19]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Martial Status</b></p>
+          <input type="text" value="{{data[0]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Type Of Residence</b></p>
+          <input type="text" value="{{data[2]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Industry Type</b></p>
+          <input type="text" value="{{data[8]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Salary/Total Inflow</b></p>
+          <input type="text" value="{{data[16]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Avg Monthly Closing Balance</b></p>
+          <input type="text" value="{{data[4]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Asset Value</b></p>
+          <input type="text" value="{{data[5]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Bank Account Detail</b></p>
+          <input type="text" value="{{data[23]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Employment Stabilty</b></p>
+          <input type="text" value="{{data[25]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>HLF Score</b></p>
+          <input type="text" value="{{data[17]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Cibil Score</b></p>
+          <input type="text" value="{{data[18]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Geo Limit</b></p>
+          <input type="text" value="{{data[28]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>PAN Number</b></p>
+          <input type="text" value="{{data[31]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <fieldset>
+      <legend><b>Product Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Product Category</b></p>
+          <input type="text" value="{{data[6]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Type Of Brand</b></p>
+          <input type="text" value="{{data[7]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Vehicle Price</b></p>
+          <input type="text" value="{{data[11]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <fieldset>
+      <legend><b>Finance Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Initial Amount</b></p>
+          <input type="text" value="{{data[12]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Finance Amount</b></p>
+          <input type="text" value="{{data[13]}}" readonly/>
+          </div>
+          <div>
+           <p><b>Interest</b></p>
+           <input type="text" value="{{data[14]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Tenure(Months)</b></p>
+          <input type="text" value="{{data[9]}}" readonly/>
+          </div>
+          <div>
+          <p><b>Installment Count</b></p>
+          <input type="text" value="{{data[10]}}" readonly/>
+          </div>
+          <div>
+          <p><b>EMI</b></p>
+          <input type="text" value="{{data[15]}}" readonly/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <div class="btn-block">
+       <button type="submit">Back to Prediction</button>
+      </div>
+    </form>
+    </div>
+  </body>
+</html>

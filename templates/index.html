@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loan Application Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, textarea, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+      line-height: 22px;
+      }
+      h1 {
+      position: absolute;
+      margin: 0;
+      font-size: 32px;
+      color: #fff;
+      z-index: 2;
+      }
+      .testbox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: inherit;
+      padding: 20px;
+      }
+      form {
+      width: 65%;
+      padding: 20px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 20px 0 #095484; 
+      }
+      .banner {
+      position: relative;
+      height: 0px; 
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      }
+      .banner::after {
+      content: "";
+      background-color: rgba(0, 0, 0, 0.5); 
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      }
+      input, select, textarea {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
+      input {
+      width: calc(100% - 10px);
+      padding: 5px;
+      }
+      select {
+      width: 100%;
+      padding: 7px 0;
+      background: transparent;
+      }
+      .item:hover p, .item:hover i, .question:hover p, .question label:hover, input:hover::placeholder, a {
+      color: #095484;
+      }
+      .item input:hover, .item select:hover, .item textarea:hover {
+      border: 1px solid transparent;
+      box-shadow: 0 0 6px 0 #095484;
+      color: #095484;
+      }
+      .item {
+      position: relative;
+      margin: 10px 0;
+      }
+      input[type="date"]::-webkit-inner-spin-button {
+      display: none;
+      }
+      .item i, input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      font-size: 20px;
+      color: #a9a9a9;
+      }
+      .item i {
+      right: 2%;
+      top: 30px;
+      z-index: 1;
+      }
+      [type="date"]::-webkit-calendar-picker-indicator {
+      right: 1%;
+      z-index: 2;
+      opacity: 0;
+      cursor: pointer;
+      }
+      input[type=radio], input[type=checkbox]  {
+      display: none;
+      }
+      label.radio, label.check {
+      position: relative;
+      display: inline-block;
+      margin: 5px 20px 15px 0;
+      cursor: pointer;
+      }
+      .question span {
+      margin-left: 30px;
+      }
+      span.required {
+      margin-left: 0;
+      color: red;
+      }
+      .checkbox-item label {
+      margin: 5px 20px 10px 0;
+      }
+      label.radio:before, label.check:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      }
+      label.radio:before {
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      border: 2px solid #095484;
+      }
+      label.check:before {
+      top: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      border: 1px solid #095484;
+      }
+      input[type=checkbox]:checked + .check:before {
+      background: #095484;
+      }
+      label.radio:after {
+      left: 5px;
+      border: 3px solid #095484;
+      }
+      label.check:after {
+      left: 4px;
+      border: 3px solid #fff;
+      }
+      label.radio:after, label.check:after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      width: 8px;
+      height: 4px;
+      background: transparent;
+      border-top: none;
+      border-right: none;
+      transform: rotate(-45deg);
+      opacity: 0;
+      }
+      input[type=radio]:checked + label:after, input[type=checkbox]:checked + label:after {
+      opacity: 1;
+      }
+      .btn-block {
+      margin-top: 10px;
+      text-align: center;
+      }
+      
+      button {
+      width: 150px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px; 
+      background: #095484;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+      }
+      button:hover {
+      background: #0666a3;
+      }
+      .title-block select, .title-block input {
+      margin-bottom: 10px;
+      }
+      @media (min-width: 568px) {
+      .title-block {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .title-block select {
+      width: 200px;
+      margin-bottom: 0;
+      }
+      .title-block input {
+      width: 189px;
+      margin-bottom: 0;
+      }
+      .city-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      }
+      .city-item input {
+      width: calc(50% - 20px);
+      }
+      .city-item select {
+      width: calc(50% - 8px);
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="testbox">
+    <form action="{{ url_for('predict')}}" method="post" enctype="multipart/form-data">
+      <br>
+      <fieldset>
+      <legend><b>Personal Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Gender</b></p>
+          <select name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+          </select>
+          </div>
+          <div>
+          <p><b>Number of Dependants</b></p>
+          <input type="text" id="dep" name="dependants" required/>
+          </div>
+          <div>
+          <p><b>Number of Years Staying</b></p>
+          <input type="text" name="staying_year" required/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Borrower Age</b></p>
+          <input type="text" name="age" required/>
+          </div>
+          <div>
+          <p><b>Martial Status</b></p>
+          <select name="martial_status" required>
+            <option value="">Select Category</option>
+            <option value="2751">Unmarried - 2751</option>
+            <option value="2750">Married - 2750</option>
+          </select>
+          </div>
+          <div>
+          <p><b>Type Of Residence</b></p>
+          <select name="residence" required>
+            <option value="">Select Category</option>
+            <option value="2755">Own - 2755</option>
+            <option value="2756">Rent/Lease - 2756</option>
+          </select>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Industry Type</b></p>
+          <select name="industrytype" required>
+            <option value="">Select Industry</option>
+            <option value="1782">SALARIED - 1782</option>
+            <option value="1783">SELF EMPLOYEED - 1783</option>
+            <option value="603">AGRICULTURE - 603</option>
+            <option value="604">PASSENGER TRANSPORTATION - 604</option>
+            <option value="605">CONSTRUCTION - 605</option>
+            <option value="875">INFRASTRUCTURE - 875</option>
+            <option value="876">CEMENT - 876</option>
+            <option value="877">OIL AND GAS - 877</option>
+            <option value="878">GOVERNMENT CONTRACT - 878</option>
+            <option value="879">OTHERS - 879</option>
+            <option value="658">MINE - 658</option>
+          </select>
+          </div>
+          <div>
+          <p><b>Salary/Total Inflow</b></p>
+          <input type="text" name="totinflow" required/>
+          </div>
+          <div>
+          <p><b>Upload Cibil Statement</b></p>
+          <input type="file" name="cibil" accept="application/vnd.ms-excel" required/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Upload Bank Statement</b></p>
+          <input type="file" name="file" accept="application/vnd.ms-excel" required/>
+          </div>
+          <div>
+          <p><b>Asset Value</b></p>
+          <input type="text" name="assetvalue" required/>
+          </div>
+          <div>
+          <p><b>Bank Account Detail</b></p>
+          <select name="bank_detail" required>
+            <option value="">Select Category</option>
+            <option value="0"> New Account</option>
+            <option value="2"> <3 Month Old </option>
+            <option value="4"> >3 Month Old </option>
+            <option value="7"> >6 Month Old </option>
+          </select>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Employment Stabilty</b></p>
+          <select name="stability" required>
+            <option value="">Select Category</option>
+            <option value="1">Salaried with over 1 year</option>
+            <option value="2">Salaried with over 6 Months</option>
+            <option value="3">Salaried less than 6 Months</option>
+          </select>
+          </div>
+          <div>
+          <p><b>HLF Score</b></p>
+          <input type="text" name="score" required/>
+          </div>
+          <div>
+          <p><b>Cibil Score</b></p>
+          <input type="text" name="another_score" disabled/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Geo Limit</b></p>
+          <select name="geo" required>
+            <option value="">Select Category</option>
+            <option value="1">Less than 15 Km</option>
+            <option value="2">More than 15 Km</option>
+          </select>
+          </div>
+          <div>
+          <p><b>City</b></p>
+          <select name="city" required>
+            <option value="">Select Category</option>
+            <option value="1">Mero</option>
+            <option value="2">Non Metro</option>
+          </select>
+          </div>
+          <div>
+          <p><b>PAN Number</b></p>
+          <input type="text" name="pan" required/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Working Exp In Months</b></p>
+          <input type="text" name="exp" required/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <fieldset>
+      <legend><b>Product Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Product Category</b></p>
+          <select name="productcat" required>
+            <option value="">Select Product</option>
+            <option value="1784">LOAN AGAINST PROPERTY - 1784</option>
+            <option value="926">CAR - 926</option>
+            <option value="912">MULTI UTILITY VEHICLE - 912</option>
+            <option value="945">VIKRAM - 945</option>
+            <option value="1402">TRACTOR - 1402</option>
+            <option value="1373">USED VEHICLES - 1373</option>
+            <option value="1672">TIPPER - 1672</option>
+            <option value="1664">FARM EQUIPMENT - 1664</option>
+            <option value="1541">TWO WHEELER - 1541</option>
+            <option value="634">INTERMEDIATE COMMERCIAL VEHICLE - 634</option>
+            <option value="527">HEAVY COMMERCIAL VEHICLE - 527</option>
+            <option value="528">CONSTRUCTION EQUIPMENTS - 528</option>
+            <option value="529">THREE WHEELERS - 529</option>
+            <option value="530">LIGHT COMMERCIAL VEHICLES - 530</option>
+            <option value="531">SMALL COMMERCIAL VEHICLE - 531</option>
+            <option value="738">MEDIUM COMMERCIAL VEHICLE - 738</option>
+            <option value="783">BUSES - 783</option>
+          </select>
+          </div>
+          <div>
+          <p><b>Type Of Brand</b></p>
+          <select name="brand" required>
+            <option value="">Select Brand</option>
+            <option value="1360">HONDA - 1360</option>
+            <option value="1542">HERO - 1542</option>
+            <option value="1544">HMSI - 1544</option>
+            <option value="1546">SUZUKI - 1546</option>
+            <option value="1647">TVS - 1647</option>
+            <option value="1547">YAMAHA - 1547</option>
+            <option value="1549">ROYAL ENFIELD - 1549</option>
+            <option value="1">OTHERS</option>
+          </select>
+          </div>
+          <div>
+          <p><b>Vehicle Price</b></p>
+          <input type="text" name="chasasset" required/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+      <br>
+      <fieldset>
+      <legend><b>Finance Information</b></legend>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Initial Amount</b></p>
+          <input type="text" name="chasinitial" />
+          </div>
+          <div>
+          <p><b>Finance Amount</b></p>
+          <input type="text" name="chasfinance" disabled/>
+          </div>
+          <div>
+           <p><b>Interest</b></p>
+           <input type="text" name="finaninterest" required/>
+          </div>
+          </div>
+      </div>
+      <div class="item">
+          <div class="title-block">
+          <div>
+          <p><b>Tenure(Months)</b></p>
+          <input type="text" name="tenure" required/>
+          </div>
+          <div>
+          <p><b>Installment Count</b></p>
+          <input type="text" name="instalcount" required/>
+          </div>
+          <div>
+          <p><b>EMI</b></p>
+          <input type="text" name="emi" disabled/>
+          </div>
+          </div>
+      </div>
+      </fieldset>
+        <div class="btn-block">
+          <button type="submit">Predict Probability</button>
+        </div>
+    </form>
+    </div>
+  </body>
+</html>
