@@ -806,7 +806,7 @@ def predict():
                        history = history,enquiry = enq_data)
         
         if l_res:
-            loan_res = 'Recommeded'
+            loan_res = 'Recommended'
             cash = amt
         else:
             loan_res = 'Not Recommended'
